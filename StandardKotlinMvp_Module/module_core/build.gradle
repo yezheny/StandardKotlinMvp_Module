@@ -1,0 +1,74 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    api "com.google.dagger:dagger:$rootProject.ext.dagger2"
+    api "com.google.dagger:dagger-android-support:$rootProject.ext.dagger2"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2"
+    kapt "com.google.dagger:dagger-android-processor:${rootProject.ext.dagger2}"
+
+    //rx
+    api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJava"
+    api "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroid"
+    api "com.jakewharton.rxbinding2:rxbinding:$rootProject.ext.rxBinding"
+    api "com.trello.rxlifecycle2:rxlifecycle-components:$rootProject.ext.rxLifecycle"
+    api "com.github.tbruyelle:rxpermissions:$rootProject.ext.rxPermission"
+
+    //retrofit
+    api "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit"
+    api "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit"
+    api "com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp"
+    api "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttp"
+
+    //butterKnife
+    api "com.jakewharton:butterknife:$rootProject.ext.butterKnife"
+    kapt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnife"
+
+    //eb、utils、gson
+    api "org.greenrobot:eventbus:${rootProject.ext.eventbus}"
+    api "com.blankj:utilcode:$rootProject.ext.utils"
+    api "com.google.code.gson:gson:$rootProject.ext.gson"
+
+    api "com.alibaba:arouter-api:$rootProject.ext.arouter_api"
+
+    implementation project(":module_ui")
+}
